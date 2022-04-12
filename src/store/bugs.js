@@ -1,5 +1,35 @@
 let lastId = 0;
 
+// Action Types
+const BUG_ADDED = 'bugAdded';
+const BUG_REMOVED = 'bugRemoved';
+const BUG_RESOLVED = 'bugResolved';
+
+//Actions or Action Creators
+
+export const bugAdded = (description) => ({
+  type: BUG_ADDED,
+  payload: {
+    description,
+  },
+});
+
+export const bugRemoved = (id) => ({
+  type: BUG_REMOVED,
+  payload: {
+    id: id,
+  },
+});
+
+export const bugResolved = (id) => ({
+  type: BUG_RESOLVED,
+  payload: {
+    id: id,
+  },
+});
+
+//Reducers or action Handlers
+
 export default function reducer(state = [], action) {
   switch (action.type) {
     case 'bugAdded':
