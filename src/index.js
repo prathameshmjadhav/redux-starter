@@ -11,5 +11,5 @@ console.log(store.getState());
 store.dispatch(bugResolved({ id: 1 }));
 console.log(store.getState());
 
-store.dispatch(bugRemoved({ id: 1 }));
-console.log(store.getState());
+// store.dispatch(bugRemoved({ id: 1 }));
+// console.log(store.getState());

@@ -1,53 +1,35 @@
-import { createAction, createReducer } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 let lastId = 0;
 
-export const bugAdded = createAction('bugAdded');
-export const bugRemoved = createAction('bugRemoved');
-export const bugResolved = createAction('bugResolved');
-
-//Reducers or action Handlers
-
- export default createReducer(
-  [],
-  {[bugAdded.type]:(bugs, action) => {
+// bugs slice
+// createSlice combines steps of createReducer and createAction into one
+// Remember to use curly braces while using arrow functions else it throws Immer error
+const slice = createSlice({
+  name:"bugs",
+  initialState:[],
+  reducers: {
+    bugAdded: (bugs,action) => { 
     bugs.push({
       id:++lastId,
       description:action.payload.description,
       resolved: false
-    });
-    },
-  
-  
-    [bugResolved.type]: (bugs, action) => {
-      const index = bugs.findIndex(bug => bug.id === action.payload.id)
-      bugs[index].resolved = true
-    }
+    })}
+  ,
+  bugResolved: (bugs, action) => {
+    const index = bugs.findIndex(bug => bug.id === action.payload.id)
+    bugs[index].resolved = true
+  },
   }
-)
+  
+  // bugRemoved: (bugs, action) => {
+  //   const delBugs = bugs.filter(bug=> bug.id !== action.payload.id);
+  //   return delBugs
+  // }
+})
 
 
-// export default function reducer(state = [], action) {
-//   switch (action.type) {
-//     case bugAdded.type:
-//       return [
-//         ...state,
-//         {
-//           id: ++lastId,
-//           description: action.payload.description,
-//           resolved: false,
-//         },
-//       ];
+export const {bugAdded,bugResolved, bugRemoved} = slice.actions;
+export default slice.reducer;
 
-//     case bugRemoved.type:
-//       return state.filter((bug) => bug.id !== action.payload.id);
 
-//     case bugResolved.type:
-//       return state.map((bug) =>
-//         bug.id === action.payload.id ? { ...bug, resolved: true } : bug
-//       );
-
-//     default:
-//       return state;
-//   }
-// }
