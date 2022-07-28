@@ -20,12 +20,13 @@ const slice = createSlice({
     const index = bugs.findIndex(bug => bug.id === action.payload.id)
     bugs[index].resolved = true
   },
-  }
+  bugRemoved: (bugs, action) => {
+    const index = bugs.findIndex(bug => bug.id === action.payload.id)
+    bugs.splice(index,1)    
+}
+  },
   
-  // bugRemoved: (bugs, action) => {
-  //   const delBugs = bugs.filter(bug=> bug.id !== action.payload.id);
-  //   return delBugs
-  // }
+  
 })
 
 
