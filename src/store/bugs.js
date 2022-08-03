@@ -23,7 +23,13 @@ const slice = createSlice({
   bugRemoved: (bugs, action) => {
     const index = bugs.findIndex(bug => bug.id === action.payload.id)
     bugs.splice(index,1)    
-}
+},
+
+  bugAssignedToUser: (bugs,action) => {
+    const{bugId, userId} = action.payload
+    const index = bugs.findIndex(bug => bug.id === bugId);
+    bugs[index].userId = userId;
+  }
   },
   
   
@@ -37,11 +43,17 @@ export const getUnresolvedBugs = createSelector(
   state => state.entities.bugs,
   state => state.entities.projects,
   (bugs,projects) => bugs.filter(bug => !bug.resolved)
+   //order in which parameters are passed is important
+)
+
+export const getBugsByUser = (userId) => createSelector(
+  state => state.entities.bugs, //output of this function gets passed as input of next function
+  bugs =>  bugs.filter(bug=> bug.userId === userId)
 )
 
 
 
-export const {bugAdded,bugResolved, bugRemoved} = slice.actions;
+export const {bugAdded,bugResolved, bugRemoved, bugAssignedToUser} = slice.actions;
 export default slice.reducer;
 
 
