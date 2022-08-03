@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 let lastId = 0;
 
@@ -28,6 +28,17 @@ const slice = createSlice({
   
   
 })
+
+//createSelector is a function of reselect library which memoizes the data,
+//memoization is technique which provides re-execution of an expensive function
+//when input is not changed, this is used widely while re-rendering components in react
+
+export const getUnresolvedBugs = createSelector(
+  state => state.entities.bugs,
+  state => state.entities.projects,
+  (bugs,projects) => bugs.filter(bug => !bug.resolved)
+)
+
 
 
 export const {bugAdded,bugResolved, bugRemoved} = slice.actions;

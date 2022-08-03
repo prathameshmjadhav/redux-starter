@@ -1,4 +1,4 @@
-import { bugAdded, bugRemoved, bugResolved } from './store/bugs';
+import { bugAdded, bugRemoved, bugResolved, getUnresolvedBugs } from './store/bugs';
 import configureStore from './store/configureStore';
 import { projectAdded } from './store/projects';
 
@@ -17,3 +17,5 @@ console.log(store.getState());
 
 store.dispatch(projectAdded({name:"abc"}));
 console.log(store.getState());
+
+console.log("Unresolved bugs",getUnresolvedBugs(store.getState()));
